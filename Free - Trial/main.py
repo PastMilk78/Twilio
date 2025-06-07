@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'top-secret!'                                # SECRET KEY CAN BE ANYTHING
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'top-secret!')  # SECRET KEY CAN BE ANYTHING
 
 
 
@@ -43,8 +43,8 @@ def append_interaction_to_chat_log(question, answer, chat_log=None):
 
 # TWILIO
 
-account_sid = 'account_sid'                                                 # Twilio Account SID
-auth_token = 'auth_token'                                                    # Twilio Account Auth Token
+account_sid = os.getenv('TWILIO_ACCOUNT_SID', '')  # Twilio Account SID
+auth_token = os.getenv('TWILIO_AUTH_TOKEN', '')    # Twilio Account Auth Token
 client = Client(account_sid, auth_token)
 
 def sendMessage(body_mess, phone_number):

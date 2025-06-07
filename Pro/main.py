@@ -5,13 +5,13 @@ import os
 import openai
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'top-secret!'                                # SECRET KEY CAN BE ANYTHING
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'top-secret!')  # SECRET KEY CAN BE ANYTHING
 
 
 
 # OPEN-AI CHAT GPT
 
-openai.api_key = "API-KEY"                                              # OPEN-AI API KEY
+openai.api_key = os.getenv('OPENAI_API_KEY', '')  # OPEN-AI API KEY
 completion = openai.Completion()
 
 start_chat_log = '''Human: Hello, who are you?
@@ -35,8 +35,8 @@ def append_interaction_to_chat_log(question, answer, chat_log=None):
         chat_log = start_chat_log
     return f'{chat_log}Human: {question}\nAI: {answer}\n'
 
-account_sid = 'ACCOUNT-SID'                                                 # Twilio Account SID
-auth_token = 'AUTH-TOKEN'                                                   # Twilio Account Auth Token
+account_sid = os.getenv('TWILIO_ACCOUNT_SID', '')  # Twilio Account SID
+auth_token = os.getenv('TWILIO_AUTH_TOKEN', '')    # Twilio Account Auth Token
 client = Client(account_sid, auth_token)
 
 
